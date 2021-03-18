@@ -21,6 +21,20 @@ app.get('/api/download', async (req, res, next) => {
   }
 });
 
+app.get('/api/video', async (req, res, next) => {
+  try {
+    const { url } = req.query;
+    const info = await ytdl.getInfo(url);
+    const { title } = info.videoDetails;
+    const [, , , test] = info.videoDetails.thumbnails;
+    const { url: thumbnailUrl } = test;
+    return res.json(info.videoDetails);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 const PORT = process.env.PORT || 3095;
 
 app.listen(PORT, () => console.log(`포트 : ${PORT}`));

@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Home = loadable(() => import('@pages/Home'));
-// const Workspace = loadable(() => import('@layouts/Workspace'));
+const Video = loadable(() => import('@pages/Video'));
 // const LogIn = loadable(() => import('@pages/LogIn'));
 // const SignUp = loadable(() => import('@pages/SignUp'));
 
@@ -12,8 +12,8 @@ const App = () => (
     {/* <Route exact path="/">
       <Redirect to="/login" />
     </Route> */}
-    <Route path="/" component={Home} />
-    {/* <Route path="/login" component={LogIn} /> */}
+    <Route exact path="/" component={Home} />
+    <Route exact path="/video" component={Video} />
     {/* <Route path="/signup" component={SignUp} /> */}
     {/* <Route path="/workspace/:workspace" component={Workspace} /> */}
   </Switch>
