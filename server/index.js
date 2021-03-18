@@ -7,14 +7,20 @@ const URL = 'https://www.youtube.com/watch?v=gSXFn4Ai6CQ';
 
 app.use(cors());
 
-app.get('/download', (req, res, next) => {
-  const { url } = req.query;
+app.get('/api/download', async (req, res, next) => {
+  try {
+    const { url } = req.query;
+    const info = await ytdl.getInfo(url);
+    const { title } = info.videoDetails;
 
-  res.header('Content-Disposition', 'attachment; filename="video.mp4');
-
-  ytdl(url, { format: 'mp4' }).pipe(res);
+    res.header('Content-Disposition', `attachment; filename="${encodeURIComponent(title)}.mp4"`);
+    ytdl(url, { format: 'mp4' }).pipe(res);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
-const PORT = process.env.PORT || 5100;
+const PORT = process.env.PORT || 3095;
 
 app.listen(PORT, () => console.log(`포트 : ${PORT}`));
