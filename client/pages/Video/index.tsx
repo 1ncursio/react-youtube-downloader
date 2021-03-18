@@ -37,7 +37,7 @@ const Video = () => {
           <span>{}</span>
           <img src={videoData.thumbnails[3].url} />
           <a href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
-            다운로드
+            Download
           </a>
         </>
       )}
