@@ -7,6 +7,7 @@ import duration from 'dayjs/plugin/duration';
 import { IVideo } from '@typings/IVideo';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { VideoThumbnail, Title, VideoContainer, VideoDetail } from '@pages/Video/styles';
+import { FadeLoader } from 'react-spinners';
 
 dayjs.extend(duration);
 
@@ -32,7 +33,7 @@ const Video = () => {
   );
 
   if (!videoData && !videoError) {
-    return <>로딩개꿀</>;
+    return <FadeLoader color="D74C36" />;
   }
 
   if (videoError) {
@@ -51,7 +52,7 @@ const Video = () => {
             <a href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
               Download
             </a>
-            <AiOutlineLoading3Quarters />
+            {/* <AiOutlineLoading3Quarters /> */}
           </VideoDetail>
         </VideoContainer>
       )}
