@@ -14,14 +14,14 @@ const Home = () => {
     (e) => {
       e.preventDefault();
       history.push(`/video?url=${url}`);
-      //   window.location.href = `http://localhost:3095/api/download?url=${url}`;
     },
     [url]
   );
 
   return (
     <>
-      <h1>React Youtube Downloader</h1>
+      {/* <h1>React Youtube Downloader</h1>
+      <p>Convert and download Youtube videos for free</p> */}
       <form onSubmit={onSubmit}>
         <input type="text" onChange={onChangeUrl} value={url} placeholder="paste Youtube link here" />
         <button type="submit" disabled={!url || !url.trim()}>

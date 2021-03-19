@@ -1,15 +1,19 @@
 import React, { useCallback, useEffect } from 'react';
-import queryString from 'query-string';
+import queryString, { ParsedQuery } from 'query-string';
 import useSWR from 'swr';
 import fetcher from '@utils/fetcher';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { IVideo } from '@typings/IVideo';
-// @ts-ignore
-import TimeFormat from 'hh-mm-ss';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { VideoThumbnail, Title, VideoContainer, VideoDetail } from '@pages/Video/styles';
+
+dayjs.extend(duration);
 
 const Video = () => {
-  const { url } = queryString.parse(location.search);
+  const { url }: ParsedQuery<string> = queryString.parse(location.search);
 
-  const { data: videoData } = useSWR<IVideo>(`/api/video?url=${url}`, fetcher);
+  const { data: videoData, error: videoError } = useSWR<IVideo>(`/api/video?url=${url}`, fetcher);
 
   useEffect(() => {
     console.log(videoData);
@@ -21,25 +25,35 @@ const Video = () => {
 
       const s = parseInt(sec, 10);
 
-      if (s >= 3600) return TimeFormat.fromS(s, 'hh:mm:ss');
-      return TimeFormat.fromS(s, 'mm:ss');
+      if (s >= 3600) return dayjs.duration(s, 'seconds').format('hh:mm:ss');
+      return dayjs.duration(s, 'seconds').format('mm:ss');
     },
     [videoData]
   );
 
+  if (!videoData && !videoError) {
+    return <>로딩개꿀</>;
+  }
+
+  if (videoError) {
+    return <>에러개꿀</>;
+  }
+
   return (
     <>
       {videoData && (
-        <>
-          <h1>{videoData.title}</h1>
-          <h2>{videoData.author.name}</h2>
-          <span>{convertSeconds(videoData.lengthSeconds)}</span>
-          <span>{}</span>
-          <img src={videoData.thumbnails[3].url} />
-          <a href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
-            Download
-          </a>
-        </>
+        <VideoContainer>
+          <VideoThumbnail src={videoData.thumbnails[3].url} />
+          <VideoDetail>
+            <Title>{videoData.title}</Title>
+            <div>{videoData.author.name}</div>
+            <div>{convertSeconds(videoData.lengthSeconds)}</div>
+            <a href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
+              Download
+            </a>
+            <AiOutlineLoading3Quarters />
+          </VideoDetail>
+        </VideoContainer>
       )}
     </>
   );
