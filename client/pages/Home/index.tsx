@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
-import { Input, Button } from '@pages/Home/styles';
+import { Input, Button, Section } from '@pages/Home/styles';
 
 const Home = () => {
   const history = useHistory();
@@ -23,14 +23,16 @@ const Home = () => {
     <>
       {/* <h1>React Youtube Downloader</h1>
       <p>Convert and download Youtube videos for free</p> */}
-      <form onSubmit={onSubmit}>
+      <Section>
         <h1>Youtube Downloader</h1>
         <p>Convert and download Youtube videos in for free</p>
-        <Input type="text" onChange={onChangeUrl} value={url} placeholder="paste Youtube link here" />
-        <Button type="submit" disabled={!url || !url.trim()}>
-          Convert
-        </Button>
-      </form>
+        <form onSubmit={onSubmit}>
+          <Input type="text" onChange={onChangeUrl} value={url} placeholder="paste Youtube link here" />
+          <Button type="submit" disabled={!url || !url.trim()}>
+            Convert
+          </Button>
+        </form>
+      </Section>
     </>
   );
 };
