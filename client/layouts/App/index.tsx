@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Home = loadable(() => import('@pages/Home'));
 const Video = loadable(() => import('@pages/Video'));
 const Header = loadable(() => import('@layouts/Header'));
+const Footer = loadable(() => import('@layouts/Footer'));
 // const LogIn = loadable(() => import('@pages/LogIn'));
 // const SignUp = loadable(() => import('@pages/SignUp'));
 
@@ -17,9 +18,8 @@ const App = () => (
     </Route> */}
       <Route exact path="/" component={Home} />
       <Route exact path="/video" component={Video} />
-      {/* <Route path="/signup" component={SignUp} /> */}
-      {/* <Route path="/workspace/:workspace" component={Workspace} /> */}
     </Switch>
+    <Footer />
   </>
 );
 

@@ -17,7 +17,7 @@ const Video = () => {
   const { data: videoData, error: videoError } = useSWR<IVideo>(`/api/video?url=${url}`, fetcher);
 
   useEffect(() => {
-    console.log(videoData);
+    if (videoData) console.log(videoData);
   }, [videoData]);
 
   const convertSeconds = useCallback(

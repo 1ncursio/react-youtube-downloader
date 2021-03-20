@@ -4,12 +4,7 @@ export const VideoContainer = styled.div`
   display: flex;
 `;
 
-export const VideoDetail = styled.div`
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-`;
+export const VideoDetail = styled.div``;
 
 export const Title = styled.span``;
 
