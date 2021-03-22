@@ -23,7 +23,7 @@ app.get('/api/video', async (req, res, next) => {
     const { url } = req.query;
     const info = await ytdl.getInfo(url);
     const formats = ytdl.filterFormats(info.formats, (format) => format.itag >= 37);
-    return res.json(formats);
+    // return res.json(formats);
     return res.json(info.videoDetails);
   } catch (error) {
     return res.status(404).send('해당하는 유튜브 동영상을 찾을 수 없습니다.');

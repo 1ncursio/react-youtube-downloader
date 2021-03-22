@@ -1,11 +1,11 @@
-import axios from 'axios';
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router';
-import { Input, Button, HomeContainer } from '@pages/Home/styles';
+import { HomeContainer } from '@pages/Home/styles';
+import SearchForm from '@components/SearchForm';
+import Video from '@components/Video';
 
 const Home = () => {
-  const history = useHistory();
   const [url, setUrl] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onChangeUrl = useCallback((e) => {
     setUrl(e.target.value);
@@ -14,7 +14,9 @@ const Home = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      history.push(`/video?url=${url}`);
+      setIsSubmitted(true);
+      console.log(url);
+      //   history.push(`/video?url=${url}`);
     },
     [url]
   );
@@ -23,12 +25,7 @@ const Home = () => {
     <HomeContainer>
       <h1>Youtube Downloader</h1>
       <p>Convert and download Youtube videos in for free</p>
-      <form onSubmit={onSubmit}>
-        <Input type="search" name="q" onChange={onChangeUrl} value={url} placeholder="Paste Youtube link here" />
-        <Button type="submit" disabled={!url || !url.trim()}>
-          Convert
-        </Button>
-      </form>
+      {isSubmitted ? <Video url={url} /> : <SearchForm onSubmit={onSubmit} onChangeUrl={onChangeUrl} url={url} />}
     </HomeContainer>
   );
 };

@@ -5,15 +5,16 @@ import fetcher from '@utils/fetcher';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { IVideo } from '@typings/IVideo';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { VideoThumbnail, Title, VideoContainer, VideoDetail } from '@pages/Video/styles';
+import { VideoThumbnail, Title, VideoContainer, VideoDetail, Button } from '@components/Video/styles';
 import { FadeLoader } from 'react-spinners';
 
 dayjs.extend(duration);
 
-const Video = () => {
-  const { url }: ParsedQuery<string> = queryString.parse(location.search);
+interface Props {
+  url: string;
+}
 
+const Video = ({ url }: Props) => {
   const { data: videoData, error: videoError } = useSWR<IVideo>(`/api/video?url=${url}`, fetcher);
 
   useEffect(() => {
@@ -41,22 +42,21 @@ const Video = () => {
   }
 
   return (
-    <>
+    <VideoContainer>
       {videoData && (
-        <VideoContainer>
+        <>
           <VideoThumbnail src={videoData.thumbnails[3].url} />
           <VideoDetail>
             <Title>{videoData.title}</Title>
-            <div>{videoData.author.name}</div>
-            <div>{convertSeconds(videoData.lengthSeconds)}</div>
-            <a href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
+            <p>{videoData.author.name}</p>
+            <p>{convertSeconds(videoData.lengthSeconds)}</p>
+            <Button href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
               Download
-            </a>
-            {/* <AiOutlineLoading3Quarters /> */}
+            </Button>
           </VideoDetail>
-        </VideoContainer>
+        </>
       )}
-    </>
+    </VideoContainer>
   );
 };
 
