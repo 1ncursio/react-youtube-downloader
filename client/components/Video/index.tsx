@@ -1,12 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
-import queryString, { ParsedQuery } from 'query-string';
-import useSWR from 'swr';
-import fetcher from '@utils/fetcher';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import { IVideo } from '@typings/IVideo';
-import { VideoThumbnail, Title, VideoContainer, VideoDetail, Button } from '@components/Video/styles';
-import { FadeLoader } from 'react-spinners';
+import {
+  Button,
+  Title,
+  VideoContainer,
+  VideoDetail,
+  VideoThumbnail,
+} from "@components/Video/styles";
+import { IVideo } from "@typings/IVideo";
+import fetcher from "@utils/fetcher";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import React, { useCallback, useEffect } from "react";
+import { FadeLoader } from "react-spinners";
+import useSWR from "swr";
 
 dayjs.extend(duration);
 
@@ -15,7 +20,10 @@ interface Props {
 }
 
 const Video = ({ url }: Props) => {
-  const { data: videoData, error: videoError } = useSWR<IVideo>(`/api/video?url=${url}`, fetcher);
+  const { data: videoData, error: videoError } = useSWR<IVideo>(
+    `/api/video?url=${url}`,
+    fetcher
+  );
 
   useEffect(() => {
     if (videoData) console.log(videoData);
@@ -27,8 +35,8 @@ const Video = ({ url }: Props) => {
 
       const s = parseInt(sec, 10);
 
-      if (s >= 3600) return dayjs.duration(s, 'seconds').format('hh:mm:ss');
-      return dayjs.duration(s, 'seconds').format('mm:ss');
+      if (s >= 3600) return dayjs.duration(s, "seconds").format("hh:mm:ss");
+      return dayjs.duration(s, "seconds").format("mm:ss");
     },
     [videoData]
   );
@@ -50,7 +58,11 @@ const Video = ({ url }: Props) => {
             <Title>{videoData.title}</Title>
             <p>{videoData.author.name}</p>
             <p>{convertSeconds(videoData.lengthSeconds)}</p>
-            <Button href={`http://localhost:3095/api/download?url=${url}`} target="_blank" rel="noopener noreferrer">
+            <Button
+              href={`http://localhost:3095/api/download?url=${url}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Download
             </Button>
           </VideoDetail>
