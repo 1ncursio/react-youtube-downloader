@@ -1,6 +1,7 @@
 # React Youtube Downloader
 
 <img src="./images/capture.gif" width="720px"></img>
+
 A simple React app that allows you to download videos from YouTube.
 
 ## Features
