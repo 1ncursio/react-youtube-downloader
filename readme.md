@@ -1,4 +1,4 @@
-# React Youtube Downloader
+# React YouTube Downloader
 
 <img src="./images/capture.gif" width="720px"></img>
 
